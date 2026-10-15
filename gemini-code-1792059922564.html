@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Medicación</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; color: #333; }
+    h1 { text-align: center; color: #1a73e8; font-size: 24px;}
+    h2 { font-size: 18px; color: #5f6368; margin-top: 30px; border-bottom: 2px solid #e0e0e0; padding-bottom: 5px;}
+    .card { background: white; padding: 15px 20px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+    .card-info { display: flex; flex-direction: column; }
+    .card-title { font-weight: bold; font-size: 16px; margin-bottom: 4px; }
+    .card-time { font-size: 14px; color: #5f6368; }
+    .checkbox { width: 28px; height: 28px; accent-color: #1a73e8; }
+    .btn { background: #1a73e8; color: white; border: none; padding: 12px 20px; border-radius: 8px; width: 100%; font-size: 16px; font-weight: bold; margin-bottom: 15px; cursor: pointer;}
+    .btn-red { background: #d93025; }
+    #calendar-container { display: none; }
+  </style>
+</head>
+<body>
+
+  <h1>Control de Tomas 💊</h1>
+  
+  <!-- Botones de Google -->
+  <button id="authorize_button" class="btn" style="display: none;">Conectar con Google Calendar</button>
+  <button id="signout_button" class="btn btn-red" style="display: none;">Desconectar Calendario</button>
+
+  <!-- Sección de Calendar (Bacteria) -->
+  <div id="calendar-container">
+    <h2>Tratamiento Bacteria (Hoy)</h2>
+    <div id="calendar-tasks">
+      <p style="text-align: center; color: #5f6368;">Cargando calendario...</p>
+    </div>
+  </div>
+
+  <!-- Sección Independiente (Creatina) -->
+  <h2>Suplementos Diarios</h2>
+  <div class="card">
+    <div class="card-info">
+      <span class="card-title">Creatina</span>
+      <span class="card-time">1 dosis diaria</span>
+    </div>
+    <input type="checkbox" class="checkbox" id="check-creatina" onchange="guardarEstadoLocal('creatina')">
+  </div>
+
+  <!-- Scripts necesarios para Google y la Lógica -->
+  <script src="app.js"></script>
+  <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+  <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+  
+  <script>
+    // Registrar el Service Worker para que sea una App instalable
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
+</body>
+</html>
